@@ -1,23 +1,17 @@
 extends Area2D
-
+class_name Bubble
 export var speed = 100 # Pixels / sec.
 
 func _process(delta_time):
 	position.y -= speed * delta_time
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+	if position.y < 0: queue_free()
+	
+signal popped
 
-
-# Called when the node enters the scene tree for the first time.
 func Pop():
+	emit_signal("popped")
 	queue_free()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-# Bubble Input
 func _on_Bubble_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:
